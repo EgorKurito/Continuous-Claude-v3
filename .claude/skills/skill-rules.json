@@ -432,6 +432,35 @@
                 ]
             }
         },
+        "docs-lookup": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Lookup current library documentation via Context7 MCP / Поиск актуальной документации через Context7",
+            "promptTriggers": {
+                "keywords": [
+                    "docs",
+                    "documentation",
+                    "library docs",
+                    "api reference",
+                    "context7",
+                    "current docs",
+                    "latest docs",
+                    "доки",
+                    "документация",
+                    "найди доки",
+                    "найди документацию",
+                    "актуальная документация"
+                ],
+                "intentPatterns": [
+                    "(get|fetch|lookup|find).*?(docs|documentation)",
+                    "(docs|documentation).*?for.*?(library|package|module)",
+                    "(current|latest|updated).*?(docs|documentation)",
+                    "(найди|покажи|найти).*?(доки|документацию)",
+                    "(доки|документация).*?(по|для|на)"
+                ]
+            }
+        },
         "nia-docs": {
             "type": "domain",
             "enforcement": "suggest",

@@ -239,6 +239,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $HOME/.claude/hooks/dist/context7-library-detect.mjs",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "Stop": [

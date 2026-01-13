@@ -381,18 +381,20 @@ async def prompt_api_keys() -> dict[str, str]:
     """Prompt user for optional API keys.
 
     Returns:
-        dict with keys: perplexity, nia, braintrust
+        dict with keys: perplexity, nia, braintrust, context7
     """
     console.print("\n[bold]API Keys (optional)[/bold]")
     console.print("Press Enter to skip any key you don't have.\n")
 
     perplexity = Prompt.ask("Perplexity API key (web search)", default="")
     nia = Prompt.ask("Nia API key (documentation search)", default="")
+    context7 = Prompt.ask("Context7 API key (library docs)", default="")
     braintrust = Prompt.ask("Braintrust API key (observability)", default="")
 
     return {
         "perplexity": perplexity,
         "nia": nia,
+        "context7": context7,
         "braintrust": braintrust,
     }
 
@@ -459,6 +461,8 @@ def generate_env_file(config: dict[str, Any], env_path: Path) -> None:
                 lines.append(f"PERPLEXITY_API_KEY={api_keys['perplexity']}")
             if api_keys.get("nia"):
                 lines.append(f"NIA_API_KEY={api_keys['nia']}")
+            if api_keys.get("context7"):
+                lines.append(f"CONTEXT7_API_KEY={api_keys['context7']}")
             if api_keys.get("braintrust"):
                 lines.append(f"BRAINTRUST_API_KEY={api_keys['braintrust']}")
             lines.append("")
