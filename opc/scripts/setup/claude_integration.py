@@ -495,10 +495,11 @@ def install_opc_integration(
             shutil.copytree(opc_scripts_core, target_scripts_core)
             result["installed_scripts"] = len(list(target_scripts_core.rglob("*.py")))
 
-        # Copy scripts/math/ for math computation support
+        # Copy scripts/cc_math/ for math computation support
         # This enables sympy_compute, pint_compute, math_router, etc.
-        opc_scripts_math = opc_source.parent / "opc" / "scripts" / "math"
-        target_scripts_math = target_dir / "scripts" / "math"
+        # Named cc_math (not math) to avoid shadowing Python's stdlib math module
+        opc_scripts_math = opc_source.parent / "opc" / "scripts" / "cc_math"
+        target_scripts_math = target_dir / "scripts" / "cc_math"
         if opc_scripts_math.exists():
             if target_scripts_math.exists():
                 shutil.rmtree(target_scripts_math)
@@ -514,6 +515,18 @@ def install_opc_integration(
                 shutil.rmtree(target_scripts_tldr)
             shutil.copytree(opc_scripts_tldr, target_scripts_tldr)
             result["installed_scripts"] += len(list(target_scripts_tldr.rglob("*.py")))
+
+        # Copy scripts/mcp/ for external research/API tools
+        # This enables perplexity_search, firecrawl_scrape, github_search, nia_docs, morph_* scripts
+        # Used by skills like /perplexity-search, /research-external, /firecrawl-scrape
+        opc_scripts_mcp = opc_source.parent / "opc" / "scripts" / "mcp"
+        target_scripts_mcp = target_dir / "scripts" / "mcp"
+        if opc_scripts_mcp.exists():
+            target_scripts_mcp.parent.mkdir(parents=True, exist_ok=True)
+            if target_scripts_mcp.exists():
+                shutil.rmtree(target_scripts_mcp)
+            shutil.copytree(opc_scripts_mcp, target_scripts_mcp)
+            result["installed_scripts"] += len(list(target_scripts_mcp.rglob("*.py")))
 
         # Copy individual root scripts used by skills/hooks
         # These are referenced by skills like /qlty-check, /ast-grep-find, /mcp-chaining
